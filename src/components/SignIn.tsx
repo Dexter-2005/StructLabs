@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
-import { ArrowLeft, Mail, User, LogIn } from 'lucide-react';
+import { ArrowLeft, Mail, Lock, LogIn } from 'lucide-react';
 
 const SignIn = () => {
     const { theme } = useTheme();
@@ -10,8 +10,8 @@ const SignIn = () => {
     const { signInLocal, isLoggedIn } = useAuth();
     const navigate = useNavigate();
 
-    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
     // Redirect if already logged in
@@ -22,16 +22,24 @@ const SignIn = () => {
 
     const handleLocalSignIn = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!name.trim()) {
-            setError('Please enter your name');
-            return;
-        }
+        setError('');
+
         if (!email.trim() || !email.includes('@')) {
             setError('Please enter a valid email');
             return;
         }
-        signInLocal(name.trim(), email.trim());
-        navigate('/');
+        if (!password) {
+            setError('Please enter your password');
+            return;
+        }
+
+        const result = signInLocal(email.trim(), password);
+
+        if (result.success) {
+            navigate('/');
+        } else {
+            setError(result.error || 'Sign in failed');
+        }
     };
 
     return (
@@ -76,24 +84,6 @@ const SignIn = () => {
                 <form onSubmit={handleLocalSignIn} className="space-y-4">
                     <div>
                         <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-white/80' : 'text-gray-700'}`}>
-                            Your Name
-                        </label>
-                        <div className="relative">
-                            <User className={`absolute left-3 top-1/2 -translate-y-1/2 ${isDark ? 'text-white/40' : 'text-gray-400'}`} size={18} />
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                placeholder="Enter your name"
-                                className={`w-full pl-10 pr-4 py-3 rounded-xl border-2 transition-all focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 ${isDark
-                                    ? 'bg-white/5 border-white/10 text-white placeholder:text-white/30 backdrop-blur-sm'
-                                    : 'bg-white/50 border-gray-200/50 text-gray-900 placeholder:text-gray-400 backdrop-blur-sm'}`}
-                            />
-                        </div>
-                    </div>
-
-                    <div>
-                        <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-white/80' : 'text-gray-700'}`}>
                             Email Address
                         </label>
                         <div className="relative">
@@ -103,6 +93,24 @@ const SignIn = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="you@example.com"
+                                className={`w-full pl-10 pr-4 py-3 rounded-xl border-2 transition-all focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 ${isDark
+                                    ? 'bg-white/5 border-white/10 text-white placeholder:text-white/30 backdrop-blur-sm'
+                                    : 'bg-white/50 border-gray-200/50 text-gray-900 placeholder:text-gray-400 backdrop-blur-sm'}`}
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-white/80' : 'text-gray-700'}`}>
+                            Password
+                        </label>
+                        <div className="relative">
+                            <Lock className={`absolute left-3 top-1/2 -translate-y-1/2 ${isDark ? 'text-white/40' : 'text-gray-400'}`} size={18} />
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="••••••••"
                                 className={`w-full pl-10 pr-4 py-3 rounded-xl border-2 transition-all focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 ${isDark
                                     ? 'bg-white/5 border-white/10 text-white placeholder:text-white/30 backdrop-blur-sm'
                                     : 'bg-white/50 border-gray-200/50 text-gray-900 placeholder:text-gray-400 backdrop-blur-sm'}`}
@@ -131,3 +139,4 @@ const SignIn = () => {
 };
 
 export default SignIn;
+

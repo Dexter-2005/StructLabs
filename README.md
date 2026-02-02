@@ -1,6 +1,6 @@
-# 🎨 AlgoCanvas
+# 🧪 StructLabs
 
-**AlgoCanvas** is an interactive Data Structure and Algorithm visualization platform designed to help students and developers understand complex concepts through beautiful, real-time animations.
+**StructLabs** is an interactive Data Structure and Algorithm visualization platform designed to help students and developers understand complex concepts through beautiful, real-time animations.
 
 ## ✨ Features
 
@@ -36,8 +36,8 @@
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/Dexter-2005/test.git
-cd test
+git clone https://github.com/usy8189/AlgoCanvas.git
+cd AlgoCanvas
 ```
 
 ### 2. Install Dependencies

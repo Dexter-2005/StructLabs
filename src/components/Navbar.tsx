@@ -12,10 +12,10 @@ const Navbar = () => {
         <nav className={`flex items-center justify-between px-8 py-6 border-b backdrop-blur-md sticky top-0 z-50 ${isDark ? 'border-white/10' : 'border-gray-200'}`}>
             <Link to="/" className="flex items-center space-x-2">
                 <div className="w-8 h-8 bg-gradient-to-tr from-sky-500 to-cyan-400 rounded-lg flex items-center justify-center font-bold text-xl text-white shadow-lg shadow-sky-500/20">
-                    A
+                    S
                 </div>
                 <span className={`text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${isDark ? 'from-white to-gray-400' : 'from-gray-900 to-gray-600'}`}>
-                    AlgoCanvas
+                    StructLabs
                 </span>
             </Link>
 

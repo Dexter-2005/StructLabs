@@ -168,7 +168,7 @@ const Algorithms = () => {
             </main>
 
             <footer className={`border-t px-8 py-12 text-center text-sm ${isDark ? 'border-white/10 text-platinum/40' : 'border-gray-200 text-gray-500'}`}>
-                <p>&copy; 2026 AlgoCanvas. Built for the future of DSA learning.</p>
+                <p>&copy; 2026 StructLabs. Built for the future of DSA learning.</p>
             </footer>
         </div>
     );

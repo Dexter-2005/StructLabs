@@ -7,7 +7,7 @@ import { ArrowLeft, Mail, User, UserPlus, Lock } from 'lucide-react';
 const SignUp = () => {
     const { theme } = useTheme();
     const isDark = theme === 'dark';
-    const { signInLocal, isLoggedIn } = useAuth();
+    const { registerLocal, isLoggedIn } = useAuth();
     const navigate = useNavigate();
 
     const [name, setName] = useState('');
@@ -24,6 +24,8 @@ const SignUp = () => {
 
     const handleSignUp = (e: React.FormEvent) => {
         e.preventDefault();
+        setError('');
+
         if (!name.trim()) {
             setError('Please enter your name');
             return;
@@ -40,9 +42,14 @@ const SignUp = () => {
             setError('Passwords do not match');
             return;
         }
-        // For local auth, we just sign them in (no actual password storage for demo)
-        signInLocal(name.trim(), email.trim());
-        navigate('/');
+
+        const result = registerLocal(name.trim(), email.trim(), password);
+
+        if (result.success) {
+            navigate('/');
+        } else {
+            setError(result.error || 'Registration failed');
+        }
     };
 
     return (
@@ -73,7 +80,7 @@ const SignUp = () => {
                     <h1 className="text-3xl font-extrabold mb-2">
                         <span className={`bg-clip-text text-transparent bg-gradient-to-r from-violet-500 to-fuchsia-500`}>Create Account</span>
                     </h1>
-                    <p className={`text-sm ${isDark ? 'text-white/60' : 'text-gray-500'}`}>Join AlgoCanvas and start learning</p>
+                    <p className={`text-sm ${isDark ? 'text-white/60' : 'text-gray-500'}`}>Join StructLabs and start learning</p>
                 </div>
 
                 {/* Error message */}
@@ -178,3 +185,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
